@@ -1,11 +1,11 @@
-import { chapterSelect, setKindIndex, newStorybook } from './navigate';
+import { chapterSelect, setKindIndex } from './navigate';
 import { chapterTOC } from './defaults';
 
 const modHMR = module;
 
 
 const addons = {
-    chapter(chapterName) {
+    chapter(chapterName, customTOC) {
         if (!this._chapter) {
             this._add = this.add;
             this._storyDecorators = this._storyDecorators || [];
@@ -16,9 +16,10 @@ const addons = {
                 subchapters: [],
                 stories: [],
                 decorators: this._storyDecorators,
+                TOC: this.storyTOC || chapterTOC,
             };
             this._currentСhapter = this._chapter; // null;
-            this._add('[.]', chapterTOC(this._chapter));
+            this._add('[.]', this._chapter.TOC(this._chapter));
         }
 
         const addTochapter = (storyName, getStory) => {
@@ -40,6 +41,7 @@ const addons = {
                 subchapters: [],
                 stories: [],
                 decorators: this._storyDecorators,
+                TOC: customTOC || chapterTOC,
             };
             this._currentСhapter.subchapters.push(newchapter);
 

@@ -1,3 +1,3 @@
-import groups from './addon';
+import chapters from './addon';
 
-export default groups;
+export default chapters;

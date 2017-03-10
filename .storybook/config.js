@@ -1,7 +1,10 @@
 import * as storybook from '@kadira/storybook';
 import { setOptions } from '@kadira/storybook-addon-options';
+import infoAddon from '@kadira/react-storybook-addon-info';
 
 import '../src';
+
+storybook.setAddon(infoAddon);
 
 // Chapters();
 
