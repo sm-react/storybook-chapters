@@ -44,11 +44,35 @@ storiesOf('React App', module)
 ## Features
 
 - The hierarchical structure of Substories
+- Compatible with `Knobs`, `addWithInfo` and other addons
+- Use `storyDecorator` to wrap all chapters
+
+## Example
+
+Lets add 'chapters' to [Storybook Boilerplate](https://github.com/sm-react/react-theming#storybook-boilerplate-project):
+
+```shell
+git clone https://github.com/sm-react/storybook-chapters.git
+cd storybook-chapters/example/react-theming
+yarn
+yarn start
+
+```
 
 ## API
 
 soon
 
+## Roadmap
+
+- Use query params to store current (sub)chapter in address string
+
+## Warning
+
+Use carefully since it in early stages. It's fairly experimental approach of addon creating. 
+
 ## Credits
+
+We'd be happy to receive feedback from this project. Any issue or PR will be appreciated!
 
 <div align="left" style="height: 16px;"><sub>Created with ❤︎ to <b>React</b> and <b>React Storybook</b> by <a href="https://twitter.com/UsulPro">@UsulPro</a> and     <a href="https://github.com/sm-react/react-theming">React Theming</a>.</sub></div>
