@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-filename-extension */
 
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf, action } from '@kadira/storybook';
 import { withKnobs, text, boolean, number } from '@kadira/storybook-addon-knobs';
 
 import Button from './button';
@@ -57,11 +57,10 @@ import Button from './button';
 //     .add('Component 3', fn(0))
 //     .add('Component 4', fn(0));
 
-
 const fn = num => () => (
   <div>
     <h4>Custom Component {num}</h4>
-    <button onClick={() => console.log(`Story number #${num}`)}>
+    <button onClick={action(`Story number #${num}`)}>
         Press me {num} times
     </button>
   </div>
@@ -73,12 +72,12 @@ storiesOf('React App', module)
         .add('Button 1', fn(1))
         .add('Button 2', fn(2))
         .chapter('Bottom Panel')
-            .add('Input 3', () => <span>Input 3: {text('Input 3', '33')}</span>)
-            .add('Input 4', () => <span>Input 4: {text('Input 4', '44')}</span>)
+            .add('Input 3', () => <span>[3]: {text('[3]', '33')}</span>)
+            .add('Input 4', () => <span>[4]: {text('[4]', '44')}</span>)
             .endOfChapter()
         .chapter('Header Panel')
-            .addWithInfo('Input 5', fn(5), { inline: true })
-            .addWithInfo('Input 6', fn(6))
+            .addWithInfo('Input 5', fn(5))
+            .addWithInfo('Input 6', fn(6), { inline: true })
             .endOfChapter()
         .endOfChapter()
     .chapter('Right panel')

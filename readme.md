@@ -3,6 +3,9 @@
 Adds unlimited levels of nesting for stories. 
 
 
+![preview](doc/img/preview.gif)
+
+
 ## Usage
 
 ```shell
