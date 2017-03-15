@@ -5,7 +5,7 @@
 This **addon** for React Storybook adds unlimited levels of **nesting for stories**. 
 
 
-![preview](doc/img/preview.gif)
+[![preview](doc/img/preview.gif)](https://raw.githubusercontent.com/sm-react/storybook-chapters/master/doc/img/preview.gif)
 
 
 ## Usage
