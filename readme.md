@@ -1,4 +1,6 @@
-# storybook-chapters
+# storybook-chapters 
+[![npm package](https://badge.fury.io/js/storybook-chapters.svg)](https://badge.fury.io/js/storybook-chapters)
+[![Live demo](https://img.shields.io/badge/Live%20Demo-%20Storybook-brightgreen.svg)](https://sm-react.github.io/storybook-chapters)
 
 This **addon** for React Storybook adds unlimited levels of **nesting for stories**. 
 
