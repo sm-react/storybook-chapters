@@ -1,6 +1,6 @@
 # storybook-chapters
 
-Adds unlimited levels of nesting for stories. 
+This **addon** for React Storybook adds unlimited levels of **nesting for stories**. 
 
 
 ![preview](doc/img/preview.gif)
