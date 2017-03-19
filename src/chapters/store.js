@@ -1,4 +1,4 @@
-import { breadcrumbs, crumbsString, strToCrumbs } from './utils';
+import { breadcrumbs, crumbsString, strToCrumbs, cleanStoriesOf } from './utils';
 import { chapterSelect } from './navigate';
 
 /** note: `channelStore`
@@ -58,8 +58,10 @@ export function addRoot(chapter) {
     const root = {
         chapter,
         current: null,
+        enable: true, // note: new feature
     };
     chapterRootMap[chapter.name] = root;
+    // setCurrentChapter ???
 }
 
 export function setCurrentChapter(chapter) {
@@ -72,3 +74,13 @@ export function setCurrentChapter(chapter) {
 //    channelStore.set('queryData', queryData); // fixme: check errors in adk
 }
 
+
+export function storiesDisable(chapter) {
+    const rootStored = findRoot(chapter);
+    cleanStoriesOf(rootStored.current.name);
+}
+
+export function storiesEnable(chapter) {
+    const rootStored = findRoot(chapter);
+    chapterSelect(rootStored.current, '');
+}

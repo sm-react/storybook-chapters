@@ -1,5 +1,5 @@
 import { chapterSelect } from './navigate';
-import { addRoot } from './store';
+import { addRoot, storiesEnable, storiesDisable } from './store';
 import { setKindIndex } from './utils';
 import { chapterTOC } from './defaults';
 
@@ -110,6 +110,28 @@ function addNewChapter(api, newchapterName) {
     return api;
 }
 
+function treeEnable(api, fn, isEnable) {
+    if (!api._currentСhapter) {
+        /** we need to init "chapters"
+         *  some other functions can do it as well
+         */
+        initChapters(api);
+    }
+    const enableFn = (isEnb) => {
+        if (isEnb) {
+            storiesEnable(api._currentСhapter);
+            return;
+        }
+        storiesDisable(api._currentСhapter);
+    };
+    enableFn(isEnable);
+    try {
+        fn(enableFn);
+    } catch (err) {
+        console.warn(err);
+    }
+}
+
 const addons = {
     chapter(chapterName, customToC) {
         /**
@@ -151,6 +173,12 @@ const addons = {
          *  so now it's just dummy and don't do anything
          *  we'll substitute in chapter() to start work
          */
+    },
+    enable(fn) {
+        treeEnable(this, fn, true);
+    },
+    disable(fn) {
+        treeEnable(this, fn, false);
     },
     bookmark(fn) {
         /** it's a next feature */
