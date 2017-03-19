@@ -1,4 +1,5 @@
 import { chapterSelect, setKindIndex } from './navigate';
+import { getStore, addRoot } from './store';
 import { chapterTOC } from './defaults';
 
 const modHMR = module;
@@ -18,10 +19,11 @@ const addons = {
                 decorators: this._storyDecorators,
                 TOC: this.storyTOC || chapterTOC,
             };
-            this._currentСhapter = this._chapter; // null;
+            this._currentСhapter = this._chapter;
             this._add('[.]', this._chapter.TOC(this._chapter));
+            addRoot(this._chapter);
         }
-
+        console.log('chapter getStore:', getStore().getAll());
         const addTochapter = (storyName, getStory) => {
             this._currentСhapter.stories.push({ storyName, getStory });
             if (this._currentСhapter === this._chapter) {

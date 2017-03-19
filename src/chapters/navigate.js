@@ -1,5 +1,6 @@
 import React from 'react';
 import { configure, storiesOf, linkTo } from '@kadira/storybook';
+import { setCurrentChapter } from './store';
 import { modDEL } from './utils';
 import { chapterTOC } from './defaults';
 
@@ -40,6 +41,7 @@ export function chapterSelect(chapter, prevKindName) {
         storiesOf(prevKindName, modDEL);
         rebuildStorybook(chapter);
         linkTo(chapter.name, '.')();
+        setCurrentChapter(chapter);
         return (
           <button onClick={() => { rebuildStorybook(chapter); }}>
             <p>Redirect to {name} chapter</p>
