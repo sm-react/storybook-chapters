@@ -1,15 +1,16 @@
 import React from 'react';
 import { configure, storiesOf, linkTo } from '@kadira/storybook';
 import { setCurrentChapter } from './store';
-import { modDEL } from './utils';
+import { modDEL, cleanStoriesOf } from './utils';
 import { chapterTOC } from './defaults';
 
 // const debugCount = 0;
 
-export function setKindIndex(kindName) {
-    storiesOf(kindName, module).add('dummmy 1', () => (<div />));
-    storiesOf(kindName, modDEL);
-}
+//export function setKindIndex(kindName) {
+//    storiesOf(kindName, module).add('dummmy 1', () => (<div />));
+////    storiesOf(kindName, modDEL);
+//    cleanStoriesOf(kindName);
+//}
 
 export function newStorybook(chapter) {
     const chapterList = chapter.subchapters;
@@ -38,7 +39,8 @@ function rebuildStorybook(currentchapter) {
 export function chapterSelect(chapter, prevKindName) {
     return () => {
         const name = chapter.name;
-        storiesOf(prevKindName, modDEL);
+//        storiesOf(prevKindName, modDEL);
+        cleanStoriesOf(prevKindName);
         rebuildStorybook(chapter);
         linkTo(chapter.name, '.')();
         setCurrentChapter(chapter);

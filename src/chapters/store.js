@@ -68,8 +68,7 @@ export function setCurrentChapter(chapter) {
         rootStored.current = chapter;
     }
     queryData.chapter = crumbsString(chapter);
-    channelStore.set('queryData', queryData); // fixme: check errors in adk
-//    console.log('setQuerry: -----', queryData);
-//    console.log('chapterRootMap:', chapterRootMap);
+    // temporary disable this:
+//    channelStore.set('queryData', queryData); // fixme: check errors in adk
 }
 

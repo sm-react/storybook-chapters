@@ -1,3 +1,5 @@
+import { configure, storiesOf, linkTo } from '@kadira/storybook';
+
 const modDEL = {
     hot: {
         dispose(fn) {
@@ -7,6 +9,19 @@ const modDEL = {
 };
 
 export { modDEL };
+
+export function cleanStoriesOf(kindName) {
+/** note: cleanStoriesOf
+  * remove storyKind from list
+  * but keep in index
+  */
+    storiesOf(kindName, modDEL);
+}
+
+export function setKindIndex(kindName) {
+    storiesOf(kindName, module).add('dummmy 1', () => (null));
+    cleanStoriesOf(kindName);
+}
 
 export function breadcrumbs(chapter, tail) {
     return (
