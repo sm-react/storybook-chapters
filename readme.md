@@ -46,10 +46,11 @@ storiesOf('React App', module)
 ## Features
 
 - The hierarchical structure of Substories
+- Hide/show your stories with `enable`/`disable` and buid your own navigation
 - Compatible with `Knobs`, `addWithInfo` and other addons
 - Use `storyDecorator` to wrap all chapters
 
-## Example
+## Examples
 
 ### Basic
 
@@ -84,7 +85,7 @@ You can access chapters features as addons (methods) of `storiesOf`.
 
 To enable chapters you need to apply one of these addons first:
 
-```
+```js
 // right:
 storiesOf('React App', module).chapter('Left panel').add('item1', fn());
 storiesOf('React App', module).enable().add('item1', fn());
@@ -102,16 +103,17 @@ Here're the list af available addons:
 
 - `.endOfChapter()` jumps to the parent chapter.
 
-- `.storyDecorator(decorator)` adds decorators to whole `storiesOf` (including subchapters)
+- `.storyDecorator(decorator)` adds decorators to whole `storiesOf` (including subchapters). Enables "chapters". You can put it in any place of chapters tree, result will be the same.
 
 - `disable(enableFn => {})` - temporarily hides current `storiesOf`. `enableFn()` - function to hide/show these stories:
 
-```
+```js
 enableFn(true)  // to show this stories
 enableFn(false) // to hide this stories
 ```
+It enables "chapters"
 
-- `enable(enableFn => {})` - don't hide current `storiesOf` but provides function `enableFn()` to control visibility of these stories
+- `enable(enableFn => {})` - don't hide current `storiesOf` but provides function `enableFn()` to control visibility of these stories. Enables "chapters"
 
 You can use `enable`/`disable` to build custom navigation with your preferred logic. 
 For example, you can use `enableFn()` in another stories, decorators or [addon panels](#roadmap) 
