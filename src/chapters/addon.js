@@ -17,11 +17,11 @@ import { chapterTOC } from './defaults';
  *
  *  - `.storyDecorator(decorator)` adds decorators to whole `storiesOf` (including subchapters)
  *
- *  - `enable(enableFn)`
+ *  - `enable(enableFn => {})`
  *
- *  - `disable(enableFn)`
+ *  - `disable(enableFn => {})`
  *
- *  - `bookmark(goToBookmark)`
+ *  - `bookmark(goToBookmark => {})`
  *
  *  - `bookmarkList(customToC)`
  *
@@ -36,13 +36,14 @@ function createChapter(api, name) {
  *  stories - is array with stories of current chapter (which adds via .add() function)
  */
     return {
-        parent: api._currentСhapter || null, // !!!
+        parent: api._currentСhapter || null,
         storyKindInstance: api,
-        name, // !!!
+        name,
         subchapters: [],
         stories: [],
         decorators: api._storyDecorators,
         TOC: api.storyTOC || chapterTOC,
+        rootStore: null, /** we add this in initChapters after addRoot() */
     };
 }
 
@@ -56,23 +57,24 @@ function initChapters(api) {
  */
     const apiChapters = api;
 
-    apiChapters._add = api.add;
+    apiChapters._add = api.add; // hello ESLint
     apiChapters._storyDecorators = api._storyDecorators || [];
 
     apiChapters._chapter = createChapter(api, api.kind);
     apiChapters._currentСhapter = api._chapter;
 
 /** add TOC story to the current "root chapter" */
-    api._add('[.]', api._chapter.TOC(api._chapter));
+//    api._add('[.]', api._chapter.TOC(api._chapter));
 
 /** save this root object in the addon store */
-    addRoot(api._chapter);
+    apiChapters._chapter.rootStore = addRoot(api._chapter);
+
+    apiChapters.add = (storyName, getStory) => addToChapter(api, storyName, getStory);
 
 /** left message to not scary other addon developers :) */
-    apiChapters.warning = `
-    This API was changed by storybook-chapters addon!
-    see https://github.com/sm-react/storybook-chapters
-`;
+    apiChapters.warning =
+`This API was changed by storybook-chapters addon!
+see https://github.com/sm-react/storybook-chapters`;
 }
 
 function addToChapter(api, storyName, getStory) {
@@ -81,7 +83,9 @@ function addToChapter(api, storyName, getStory) {
  * (when we use .add() after chapters init)
  */
     api._currentСhapter.stories.push({ storyName, getStory });
-    if (api._currentСhapter === api._chapter) {
+
+    const isEnable = api._currentСhapter.rootStore.enable;
+    if (api._currentСhapter === api._chapter && isEnable) {
         api._add(storyName, getStory);
     }
     return api;
@@ -96,6 +100,8 @@ function addNewChapter(api, newchapterName) {
 
     setKindIndex(newchapterName);
     const newchapter = createChapter(api, newchapterName);
+    newchapter.rootStore = api._currentСhapter.rootStore;
+
     api._currentСhapter.subchapters.push(newchapter);
 
     if (api._currentСhapter === api._chapter) {
@@ -117,7 +123,7 @@ function treeEnable(api, fn, isEnable) {
          */
         initChapters(api);
     }
-    const enableFn = (isEnb) => {
+    const enableFn = (isEnb = true) => {
         if (isEnb) {
             storiesEnable(api._currentСhapter);
             return;
@@ -125,10 +131,12 @@ function treeEnable(api, fn, isEnable) {
         storiesDisable(api._currentСhapter);
     };
     enableFn(isEnable);
-    try {
-        fn(enableFn);
-    } catch (err) {
-        console.warn(err);
+    if (fn) {
+        try {
+            fn(enableFn);
+        } catch (err) {
+            console.warn(err);
+        }
     }
 }
 
@@ -147,14 +155,16 @@ const addons = {
             initChapters(this);
         }
 
-        /** Create **root** chapter */
+        this._add('[.]', this._chapter.TOC(this._chapter)); // ?????
+
+        /** Create first "sub chapter" after **root**  */
         addNewChapter(this, chapterName);
 
         /** substitute add() and chapter()
          *  because we don't need to invoke them immidiately
          *  we just store them in "subchapters"
          */
-        this.add = (storyName, getStory) => addToChapter(this, storyName, getStory);
+
         this.chapter = name => addNewChapter(this, name);
 
         /** substitute endOfChapter() to work properly */
@@ -164,6 +174,12 @@ const addons = {
         };
     },
     storyDecorator(fn) {
+        if (!this._currentСhapter) {
+            /** we need to init "chapters"
+             *  some other functions can do it as well
+             */
+            initChapters(this);
+        }
         this._storyDecorators = this._storyDecorators || [];
         this._storyDecorators.push(fn);
         this.addDecorator(fn);
@@ -192,6 +208,15 @@ const addons = {
     toc(customToC) {
         /** it's a next feature */
         // const renderToC = customToC ? customToC(crumbs, chapters, stories) : chapterTOC;
+    },
+    _(storyName, getStory) {
+        if (!this._currentСhapter) {
+            /** we need to init "chapters"
+             *  some other functions can do it as well
+             */
+            initChapters(this);
+        }
+        this.add(storyName, getStory);
     },
 };
 

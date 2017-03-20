@@ -15,10 +15,17 @@ export function cleanStoriesOf(kindName) {
   * remove storyKind from list
   * but keep in index
   */
+    if (!kindName) return;
+
+    storiesOf(kindName, module).add('_', () => null);
     storiesOf(kindName, modDEL);
 }
 
 export function setKindIndex(kindName) {
+    /**
+     * here we store storyKind index and clean it
+     * it keeps the oder of storyKinds
+     */
     storiesOf(kindName, module).add('dummmy 1', () => (null));
     cleanStoriesOf(kindName);
 }

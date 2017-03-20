@@ -1,7 +1,7 @@
 import React from 'react';
 import { configure, storiesOf, linkTo } from '@kadira/storybook';
 import { setCurrentChapter } from './store';
-import { modDEL, cleanStoriesOf } from './utils';
+import { cleanStoriesOf } from './utils';
 import { chapterTOC } from './defaults';
 
 // const debugCount = 0;
@@ -19,7 +19,7 @@ export function newStorybook(chapter) {
     return () => {
         const newStory = storiesOf(chapter.name, module);
         decoratorList.forEach(fn => newStory.addDecorator(fn));
-        newStory.add('[.]', chapter.TOC(chapter));
+        if (chapter.parent || chapterList.length > 0) newStory.add('[.]', chapter.TOC(chapter));
         if (chapter.parent) {
             newStory.add('[..]', chapterSelect(chapter.parent, chapter.name));
         }
@@ -52,3 +52,11 @@ export function chapterSelect(chapter, prevKindName) {
     };
 }
 
+export function chapterHide(chapter) {
+    cleanStoriesOf(chapter.name);
+    configure(() => {}, module);
+}
+
+export function chapterShow(chapter) {
+    rebuildStorybook(chapter);
+}

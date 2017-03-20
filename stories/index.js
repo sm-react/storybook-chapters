@@ -13,7 +13,15 @@ import Button from './button';
  *  You can pass a single object or an array of themes
  */
 
-
+const fn = num => () => (
+  <div>
+    <h4>Custom Component {num}</h4>
+    <button onClick={action(`Story number #${num}`)}>
+        Press me {num} times
+    </button>
+  </div>
+);
+// `
 // const story = storiesOf('React App', module)
     // .storyDecorator((story) => (<div><p>Decorator:</p>{story()}</div>))
     // .add('dummmy 1', fn(0))
@@ -45,32 +53,28 @@ import Button from './button';
 //     .add('Component 3', fn(0))
 //     .add('Component 4', fn(0));
 
-// storiesOf('Just story 2', module)
-//     .add('Component 1', fn(0))
-//     .add('Component 2', fn(0))
-//     .add('Component 3', fn(0))
-//     .add('Component 4', fn(0));
+const select = {
+    set1: null,
+    set2: null,
+    go1() {
+//        select.set1(false);
+        return () => {
+            return(<button onClick={() => select.set1(false)}>set1 on</button>);
+        }
+    },
+    go2() {
+        return () => {
+//            select.set2(true);
+            console.log('set2');
+            return(<button onClick={() => select.set2(true)}>set2 on</button>);
+        }
+    },
+};
 
-// storiesOf('Just story 3', module)
-//     .add('Component 1', fn(0))
-//     .add('Component 2', fn(0))
-//     .add('Component 3', fn(0))
-//     .add('Component 4', fn(0));
-
-const fn = num => () => (
-  <div>
-    <h4>Custom Component {num}</h4>
-    <button onClick={action(`Story number #${num}`)}>
-        Press me {num} times
-    </button>
-  </div>
-);
 
 storiesOf('React App', module)
     .storyDecorator(withKnobs)
     .chapter('Left panel')
-        .add('Button 1', fn(1))
-        .add('Button 2', fn(2))
         .chapter('Bottom Panel')
             .add('Input 3', () => <span>[3]: {text('[3]', '33')}</span>)
             .add('Input 4', () => <span>[4]: {text('[4]', '44')}</span>)
@@ -84,4 +88,29 @@ storiesOf('React App', module)
         .add('Button 7', fn(7))
         .add('Button 8', fn(8))
         .endOfChapter()
+    .add('Dark side', () => {
+        select.set1(false);
+        select.set2();
+        return (<div>{'select.set1(false)'}</div>);
+    })
+    .add('Light side', () => {
+        select.set1();
+        select.set2(false);
+        return (<div>{'select.set2(false)'}</div>);
+    })
     .add('App footer', fn(110));
+
+
+storiesOf('Heroes Light', module)
+    .disable((en) => { select.set1 = en; })
+    .add('Light 1', fn(0))
+    .add('Light 2', fn(0))
+    .add('Light 3', fn(0))
+    .add('Light 4', fn(0));
+
+storiesOf('Heroes Dark', module)
+    .enable((en) => { select.set2 = en; })
+    .add('Dark 1', fn(0))
+    .add('Dark 2', fn(0))
+    .add('Dark 3', fn(0))
+    .add('Dark 4', fn(0));
