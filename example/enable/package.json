@@ -1,8 +1,8 @@
 {
-  "name": "storybook-chapters",
-  "version": "0.2.0",
-  "description": "Adds Substories/Hierarchy to React Storybook",
-  "main": "dist/index.js",
+  "name": "react-theming-boilerplate",
+  "version": "0.2.5",
+  "description": "Themable React App based on Storybook",
+  "main": "dist/App.js",
   "scripts": {
     "deploy": "node .scripts/deployer",
     "prepublish": "node .scripts/npm-prepublish.js",
@@ -19,22 +19,32 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sm-react/storybook-chapters"
+    "url": "https://github.com/sm-react/react-theming"
   },
   "keywords": [
     "storybook",
     "react",
+    "material",
+    "ui",
+    "material-ui",
     "addon",
     "decorator",
+    "theme",
+    "editor",
     "customization",
+    "dark theme",
+    "light theme",
+    "boilerplate",
+    "app",
+    "npm",
     "development",
     "addons"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sm-react/storybook-chapters/issues"
+    "url": "https://github.com/sm-react/react-theming/issues"
   },
-  "homepage": "https://github.com/sm-react/storybook-chapters",
+  "homepage": "https://github.com/sm-react/react-theming",
   "devDependencies": {
     "@kadira/react-storybook-addon-info": "^3.3.0",
     "@kadira/storybook": "^2.33.1",
@@ -73,16 +83,11 @@
     "semver": "^5.3.0",
     "shelljs": "^0.7.3",
     "sinon": "^1.17.3",
+    "storybook-chapters": "^0.2.0",
     "style-loader": "^0.13.1"
-  },
-  "peerDependencies": {
-    "@kadira/storybook": "^2.33.1",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1"
   },
   "dependencies": {
     "react": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "storybook-adk": "^0.7.5"
+    "react-dom": "^15.4.1"
   }
 }

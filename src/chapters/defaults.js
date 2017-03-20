@@ -1,6 +1,7 @@
 import React from 'react';
 import { linkTo } from '@kadira/storybook';
 import { chapterSelect } from './navigate';
+import { breadcrumbs } from './utils';
 
 const styles = {
     toc: {
@@ -55,12 +56,6 @@ Breadcrumbs.propTypes = {
     path: React.PropTypes.arrayOf(React.PropTypes.object),
     currentStory: React.PropTypes.string,
 };
-
-function breadcrumbs(chapter, tail) {
-    return (
-        !chapter ? tail : breadcrumbs(chapter.parent, [chapter, ...(tail || [])])
-    );
-}
 
 export function chapterTOC(chapter) {
     return () => {

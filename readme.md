@@ -51,23 +51,82 @@ storiesOf('React App', module)
 
 ## Example
 
+### Basic
+
+[story](https://github.com/sm-react/storybook-chapters/blob/master/example/basic/src/stories/index.js)
+
 Lets add 'chapters' to [Storybook Boilerplate](https://github.com/sm-react/react-theming#storybook-boilerplate-project):
 
 ```shell
 git clone https://github.com/sm-react/storybook-chapters.git
-cd storybook-chapters/example/react-theming
+cd storybook-chapters/example/basic
 yarn
 yarn start
 
 ```
 
+### Choose your side with Enable / Disable API
+
+[story](https://github.com/sm-react/storybook-chapters/blob/master/example/enable/src/stories/index.js)
+
+```shell
+git clone https://github.com/sm-react/storybook-chapters.git
+cd storybook-chapters/example/enable
+yarn
+yarn start
+```
+
 ## API
 
-soon
+You can access chapters features as addons (methods) of `storiesOf`.
+
+>example: `storiesOf('React App', module).chapter('Left panel')`
+
+To enable chapters you need to apply one of these addons first:
+
+```
+// right:
+storiesOf('React App', module).chapter('Left panel').add('item1', fn());
+storiesOf('React App', module).enable().add('item1', fn());
+
+// wrong:
+storiesOf('React App', module).add('item1', fn()).chapter('Left panel');
+
+```
+
+Here're the list af available addons:
+
+- `.chapter(name, ToC)` enables "chapters", init root chapter and adds subchapters to `storiesOf`. You can use .add() to add stories to this chapter and .chapter() to add subchapters.
+
+- `.add(name, story)` add stories to current chapter
+
+- `.endOfChapter()` jumps to the parent chapter.
+
+- `.storyDecorator(decorator)` adds decorators to whole `storiesOf` (including subchapters)
+
+- `disable(enableFn => {})` - temporarily hides current `storiesOf`. `enableFn()` - function to hide/show these stories:
+
+```
+enableFn(true)  // to show this stories
+enableFn(false) // to hide this stories
+```
+
+- `enable(enableFn => {})` - don't hide current `storiesOf` but provides function `enableFn()` to control visibility of these stories
+
+You can use `enable`/`disable` to build custom navigation with your preferred logic. 
+For example, you can use `enableFn()` in another stories, decorators or [addon panels](#roadmap) 
 
 ## Roadmap
 
 - Use query params to store current (sub)chapter in address string
+
+- Custom TOC
+
+- Bookmarks
+
+- Custom addon panel
+
+- Chapter decorators
 
 ## Warning
 
