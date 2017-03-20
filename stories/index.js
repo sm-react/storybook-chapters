@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import { withKnobs, text, boolean, number } from '@kadira/storybook-addon-knobs';
+import { withKnobs, text } from '@kadira/storybook-addon-knobs';
 
 import Button from './button';
 
@@ -54,20 +54,19 @@ const fn = num => () => (
 //     .add('Component 4', fn(0));
 
 const select = {
-    set1: null,
-    set2: null,
+    set1: () => {},
+    set2: () => {},
     go1() {
 //        select.set1(false);
         return () => {
-            return(<button onClick={() => select.set1(false)}>set1 on</button>);
-        }
+            return (<button onClick={() => select.set1(false)}>set1 on</button>);
+        };
     },
     go2() {
         return () => {
 //            select.set2(true);
-            console.log('set2');
-            return(<button onClick={() => select.set2(true)}>set2 on</button>);
-        }
+            return (<button onClick={() => select.set2(true)}>set2 on</button>);
+        };
     },
 };
 

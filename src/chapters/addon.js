@@ -1,5 +1,5 @@
 import { chapterSelect } from './navigate';
-import { addRoot, storiesEnable, storiesDisable } from './store';
+import { addRoot, storiesEnable } from './store';
 import { setKindIndex } from './utils';
 import { chapterTOC } from './defaults';
 
@@ -124,11 +124,11 @@ function treeEnable(api, fn, isEnable) {
         initChapters(api);
     }
     const enableFn = (isEnb = true) => {
-        if (isEnb) {
-            storiesEnable(api._currentСhapter);
-            return;
-        }
-        storiesDisable(api._currentСhapter);
+//        if (isEnb) {
+        storiesEnable(api._currentСhapter, isEnb);
+//            return;
+//        }
+//        storiesDisable(api._currentСhapter);
     };
     enableFn(isEnable);
     if (fn) {

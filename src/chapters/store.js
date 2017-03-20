@@ -1,5 +1,5 @@
-import { breadcrumbs, crumbsString, strToCrumbs, cleanStoriesOf } from './utils';
-import { chapterSelect, chapterHide, chapterShow } from './navigate';
+import { breadcrumbs, crumbsString, strToCrumbs } from './utils';
+import { chapterHide, chapterShow } from './navigate';
 
 /** note: `channelStore`
   * store to communicate through the channel
@@ -75,19 +75,55 @@ export function setCurrentChapter(chapter) {
 //    channelStore.set('queryData', queryData); // fixme: check errors in adk
 }
 
+export function getEnabledMap() {
+    const keys = Object.keys(chapterRootMap);
+    const map = {};
+    keys.forEach((val) => {
+        map[val] = chapterRootMap[val].enable;
+    });
+    return map;
+}
 
+export function setEnabledMap(map) {
+    const keys = Object.keys(map);
+    const chapterRoots = Object.keys(chapterRootMap);
+    keys.forEach((val) => {
+        if (chapterRoots.find(name => (name === val))) {
+            chapterRoots[val].enable = map[val];
+            storiesEnable(chapterRoots[val], map[val]);
+        }
+    });
+}
+
+function sendEnabledMap(rootStored) {
+    const storedMap = channelStore.get('enabledMap');
+    if (!storedMap || !storedMap[rootStored.chapter.name] ||
+        (storedMap[rootStored.chapter.name].enable !== rootStored.enable)) {
+        channelStore.set('enabledMap', getEnabledMap());
+    }
+}
+
+/*
 export function storiesDisable(chapter) {
     const rootStored = findRoot(chapter);
     if (rootStored && rootStored.enable) {
         rootStored.enable = false;
         chapterHide(rootStored.current);
+        sendEnabledMap(rootStored);
     }
 }
+*/
 
-export function storiesEnable(chapter) {
+export function storiesEnable(chapter, isEnable = true) {
     const rootStored = findRoot(chapter);
-    if (rootStored && !rootStored.enable) {
-        rootStored.enable = true;
-        chapterShow(rootStored.current);
+    if (rootStored && (rootStored.enable !== isEnable)) {
+        rootStored.enable = isEnable;
+        if (isEnable) {
+            chapterShow(rootStored.current);
+        } else {
+            chapterHide(rootStored.current);
+        }
+
+        sendEnabledMap(rootStored);
     }
 }

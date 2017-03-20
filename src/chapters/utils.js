@@ -1,4 +1,4 @@
-import { configure, storiesOf, linkTo } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 
 const modDEL = {
     hot: {
