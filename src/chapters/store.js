@@ -1,5 +1,5 @@
-import { breadcrumbs, crumbsString, strToCrumbs } from './utils';
-import { chapterSelect } from './navigate';
+import { breadcrumbs, crumbsString, strToCrumbs, cleanStoriesOf } from './utils';
+import { chapterSelect, chapterHide, chapterShow } from './navigate';
 
 /** note: `channelStore`
   * store to communicate through the channel
@@ -45,7 +45,8 @@ export function setStore(store) {
         const reqChap = checkPath(chapNamesArr);
 //        console.log('reqChap:', reqChap);
         if (reqChap) {
-            chapterSelect(reqChap, findRoot(reqChap).chapter.name)();
+        // temporary disable
+//            chapterSelect(reqChap, findRoot(reqChap).chapter.name)();
         }
     });
 }
@@ -57,9 +58,11 @@ export function getStore() {
 export function addRoot(chapter) {
     const root = {
         chapter,
-        current: null,
+        current: chapter, // ??
+        enable: true, // note: new feature
     };
     chapterRootMap[chapter.name] = root;
+    return root;
 }
 
 export function setCurrentChapter(chapter) {
@@ -68,8 +71,23 @@ export function setCurrentChapter(chapter) {
         rootStored.current = chapter;
     }
     queryData.chapter = crumbsString(chapter);
-    channelStore.set('queryData', queryData); // fixme: check errors in adk
-//    console.log('setQuerry: -----', queryData);
-//    console.log('chapterRootMap:', chapterRootMap);
+    // temporary disable this:
+//    channelStore.set('queryData', queryData); // fixme: check errors in adk
 }
 
+
+export function storiesDisable(chapter) {
+    const rootStored = findRoot(chapter);
+    if (rootStored && rootStored.enable) {
+        rootStored.enable = false;
+        chapterHide(rootStored.current);
+    }
+}
+
+export function storiesEnable(chapter) {
+    const rootStored = findRoot(chapter);
+    if (rootStored && !rootStored.enable) {
+        rootStored.enable = true;
+        chapterShow(rootStored.current);
+    }
+}
