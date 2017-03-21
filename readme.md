@@ -95,7 +95,7 @@ storiesOf('React App', module).add('item1', fn()).chapter('Left panel');
 
 ```
 
-Here're the list af available addons:
+Here're the list of available addons:
 
 - `.chapter(name, ToC)` enables "chapters", init root chapter and adds subchapters to `storiesOf`. You can use .add() to add stories to this chapter and .chapter() to add subchapters.
 
