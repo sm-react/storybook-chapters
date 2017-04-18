@@ -47,7 +47,7 @@ function createChapter(api, name) {
     };
 }
 
-function initChapters(api) {
+function initChapters(api) { // todo: new API initAddon - to inject this to stories
 /** note: initChapters
  *  here we inject fields, functions and replace some functions
  *  inside the api object returned by storiesOf
@@ -55,7 +55,7 @@ function initChapters(api) {
  *  (see client_api.js in react-storybook)
  *  we need to do it ones for each storiesOf instance
  */
-    const apiChapters = api;
+    const apiChapters = api; // todo: rename to apiStories
 
     apiChapters._add = api.add; // hello ESLint
     apiChapters._storyDecorators = api._storyDecorators || [];
@@ -142,6 +142,7 @@ function treeEnable(api, fn, isEnable) {
 
 const addons = {
     chapter(chapterName, customToC) {
+      // todo: depricate customToC, use .toc instead
         /**
          *  It calls only once to init chapters for storiesOf
          *  and to create the root of chapters
@@ -165,7 +166,7 @@ const addons = {
          *  we just store them in "subchapters"
          */
 
-        this.chapter = name => addNewChapter(this, name);
+        this.chapter = name => addNewChapter(this, name); // todo: move to init
 
         /** substitute endOfChapter() to work properly */
         this.endOfChapter = () => {
@@ -173,6 +174,46 @@ const addons = {
             return this;
         };
     },
+
+    addChapter(chapterName, chapterFn) {
+      /** Usage:
+      .addChapter('Chapter1', chapter => chapter
+        .add('name', fn())
+        .addChapter('Chapter1-1', subFn) // subFn(chapter) {chapter.add();}
+       */
+      if (!this._currentСhapter) {
+            /** we need to init "chapters" in first call
+             *  some other functions can do it before chapter()
+             */
+            initChapters(this);
+       }
+       this._add('[.]', this._chapter.TOC(this._chapter)); // may cause error
+       
+       /** Create first "sub chapter" after **root**  */
+        addNewChapter(this, chapterName);
+       
+       this.addChapter = (name, chapterFn) => {
+         addNewChapter(this, name); // todo: move to init
+         chapterFn(this);
+       }
+       /*
+       const chapterAPI = {
+          add(name, fn) {
+            
+          },
+          addChapter(chapterName, chapterFn) {
+            
+          },
+        };
+        */
+        try {
+          chapterFn(this);
+        }
+        catch(err) {
+          
+        }
+     },
+ 
     storyDecorator(fn) {
         if (!this._currentСhapter) {
             /** we need to init "chapters"
