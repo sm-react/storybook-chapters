@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-filename-extension */
 
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf, action, getStorybook } from '@kadira/storybook';
 import { withKnobs, text } from '@kadira/storybook-addon-knobs';
 
 import Button from './button';
@@ -70,6 +70,23 @@ const select = {
     },
 };
 
+// storiesOf('add-Chapter', module)
+//     .addChapter('add Left panel', chapter => chapter
+//         .add('Fn 1', fn(1))
+//         .add('Fn 2', fn(2))
+//         // .addChapter('Bottom Panel', chapter => chapter
+//         //     .add('Input 3', fn(3))
+//         //     .add('Input 4', fn(4))
+//         // )
+//     )
+//     .addChapter('add Header Panel', chapter => chapter
+//         .add('Fn 5', fn(5))
+//         .add('Fn 6', fn(6))
+//     );
+//     // .addChapter('Right panel', chapter => chapter
+//     //     .add('Button 7', fn(7))
+//     //     .add('Button 8', fn(8))
+//     // )
 
 storiesOf('React App', module)
     .storyDecorator(withKnobs)
@@ -113,3 +130,5 @@ storiesOf('Heroes Dark', module)
     .add('Dark 2', fn(0))
     .add('Dark 3', fn(0))
     .add('Dark 4', fn(0));
+
+console.log(getStorybook());

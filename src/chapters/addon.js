@@ -181,39 +181,28 @@ const addons = {
         .add('name', fn())
         .addChapter('Chapter1-1', subFn) // subFn(chapter) {chapter.add();}
        */
-      if (!this._currentСhapter) {
+        if (!this._currentСhapter) {
             /** we need to init "chapters" in first call
              *  some other functions can do it before chapter()
              */
             initChapters(this);
-       }
-       this._add('[.]', this._chapter.TOC(this._chapter)); // may cause error
-       
+        }
+        console.log('Create sss');
+        this._add('[.]', this._chapter.TOC(this._chapter)); // may cause error
+
        /** Create first "sub chapter" after **root**  */
-        addNewChapter(this, chapterName);
-       
-       this.addChapter = (name, chapterFn) => {
-         addNewChapter(this, name); // todo: move to init
-         chapterFn(this);
-       }
-       /*
-       const chapterAPI = {
-          add(name, fn) {
-            
-          },
-          addChapter(chapterName, chapterFn) {
-            
-          },
-        };
-        */
-        try {
-          chapterFn(this);
-        }
-        catch(err) {
-          
-        }
-     },
- 
+       const currentСhapter = this._currentСhapter;
+       addNewChapter(this, chapterName);
+       this._currentСhapter = currentСhapter; // !!!
+
+        // const addChapter = (name, subChapterFn) => {
+        //     addNewChapter(this, name); // todo: move to init
+        //     subChapterFn(this);
+        // };
+
+        chapterFn(this);
+    },
+
     storyDecorator(fn) {
         if (!this._currentСhapter) {
             /** we need to init "chapters"
