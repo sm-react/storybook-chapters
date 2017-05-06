@@ -158,7 +158,7 @@ function treeEnable(api, fn, isEnable) {
 }
 
 const addons = {
-    chapter(chapterName, customToC) {
+    chapter(chapterName) {
       // todo: depricate customToC, use .toc instead
         initChapters(this);
         /** Create first "sub chapter" after **root**  */

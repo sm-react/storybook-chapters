@@ -76,11 +76,11 @@ storiesOf('New Chapters API', module)
         .add('Atom 2', fn(2))
         .addChapter('Molecules', chapter => chapter
             .addChapter('Organisms', chapter => chapter
-                .add('Organism 1', fn(1))
-                .add('Organism 2', fn(2)),
+                .add('Organism 1', fn(7))
+                .add('Organism 2', fn(8)),
             )
-            .add('Molecule 1', fn(1))
-            .add('Molecule 2', fn(2)),
+            .addWithInfo('Molecule 1', fn(1))
+            .addWithInfo('Molecule 2', fn(2)),
         )
         .add('Atom 3', fn(3))
         .add('Atom 4', fn(4)),
@@ -139,5 +139,27 @@ storiesOf('Heroes Dark', module)
     .add('Dark 2', fn(0))
     .add('Dark 3', fn(0))
     .add('Dark 4', fn(0));
+
+storiesOf('Mixed API', module)
+    .addChapter('Atoms new', chapter => chapter
+        .add('Atom 1', fn(1))
+        .add('Atom 2', fn(2))
+        .addChapter('Molecules new', chapter => chapter
+            .chapter('Cells old')
+                .add('Cell 1', fn(1))
+                .add('Cell 2', fn(2))
+                .addChapter('Organisms new in old', chapter => chapter
+                    .add('Organism 1', fn(1))
+                    .add('Organism 2', fn(2)),
+                )
+                .endOfChapter()
+            .add('Molecule 1', fn(1))
+            .add('Molecule 2', fn(2)),
+        )
+        .add('Atom 3', fn(3))
+        .add('Atom 4', fn(4)),
+    )
+    .add('new API docs', fn(3))
+    .add('prev API docs', fn(4));
 
 // console.log(getStorybook());
