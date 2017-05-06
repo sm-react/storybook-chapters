@@ -47,36 +47,6 @@ function createChapter(api, name) {
     };
 }
 
-function initChapters(api) { // todo: new API initAddon - to inject this to stories
-/** note: initChapters
- *  here we inject fields, functions and replace some functions
- *  inside the api object returned by storiesOf
- *  in oder to add "chapter" features to stories
- *  (see client_api.js in react-storybook)
- *  we need to do it ones for each storiesOf instance
- */
-    const apiChapters = api; // todo: rename to apiStories
-
-    apiChapters._add = api.add; // hello ESLint
-    apiChapters._storyDecorators = api._storyDecorators || [];
-
-    apiChapters._chapter = createChapter(api, api.kind);
-    apiChapters._currentСhapter = api._chapter;
-
-/** add TOC story to the current "root chapter" */
-//    api._add('[.]', api._chapter.TOC(api._chapter));
-
-/** save this root object in the addon store */
-    apiChapters._chapter.rootStore = addRoot(api._chapter);
-
-    apiChapters.add = (storyName, getStory) => addToChapter(api, storyName, getStory);
-
-/** left message to not scary other addon developers :) */
-    apiChapters.warning =
-`This API was changed by storybook-chapters addon!
-see https://github.com/sm-react/storybook-chapters`;
-}
-
 function addToChapter(api, storyName, getStory) {
 /** note: addToChapter
  *  - adds story to current chapter
@@ -96,7 +66,7 @@ function addNewChapter(api, newchapterName) {
   * - adds subchapter to current chapter
   * (when we use .chapter() after chapters init)
   */
-    const apiChapters = api;
+    const apiStories = api;
 
     setKindIndex(newchapterName);
     const newchapter = createChapter(api, newchapterName);
@@ -111,25 +81,72 @@ function addNewChapter(api, newchapterName) {
         );
     }
 
-    apiChapters._currentСhapter = newchapter;
+    apiStories._currentСhapter = newchapter;
 
     return api;
 }
 
-function treeEnable(api, fn, isEnable) {
-    if (!api._currentСhapter) {
-        /** we need to init "chapters"
-         *  some other functions can do it as well
-         */
-        initChapters(api);
+function addRecursiveChapter(api, name, subChapterFn) {
+/** note: addRecursiveChapter
+ * Recursive API to add chapters
+ */
+    const apiStories = api;
+    const currentСhapter = api._currentСhapter;
+    addNewChapter(api, name);
+    subChapterFn(api);
+    apiStories._currentСhapter = currentСhapter;
+    return api;
+}
+
+function shiftToParent(api) {
+/** note: shiftToParent
+ * set _currentСhapter pointer to the parent chapter or to the root
+ */
+    const apiStories = api;
+    apiStories._currentСhapter = api._currentСhapter.parent || api._currentСhapter;
+    return api;
+}
+
+function initChapters(api) { // todo: new API initAddon - to inject this to stories
+/** note: initChapters
+ *  here we inject fields, functions and replace some functions
+ *  inside the api object returned by storiesOf
+ *  in oder to add "chapter" features to stories
+ *  (see client_api.js in react-storybook)
+ *  we need to do it ones for each storiesOf instance
+ */
+    if (api._currentСhapter) {
+        // if Chapter already initialized don't do anything
+        return;
     }
-    const enableFn = (isEnb = true) => {
-//        if (isEnb) {
-        storiesEnable(api._currentСhapter, isEnb);
-//            return;
-//        }
-//        storiesDisable(api._currentСhapter);
-    };
+    const apiStories = api; // todo: rename to apiStories
+
+    apiStories._add = api.add; // hello ESLint
+    apiStories._storyDecorators = api._storyDecorators || [];
+
+    apiStories._chapter = createChapter(api, api.kind);
+    apiStories._currentСhapter = api._chapter;
+
+/** add TOC story to the current "root chapter" */
+    api._add('[.]', api._chapter.TOC(api._chapter));
+
+/** save this root object in the addon store */
+    apiStories._chapter.rootStore = addRoot(api._chapter);
+
+    apiStories.add = (storyName, getStory) => addToChapter(api, storyName, getStory);
+    apiStories.chapter = name => addNewChapter(api, name);
+    apiStories.addChapter = (name, subChapterFn) => addRecursiveChapter(api, name, subChapterFn);
+    apiStories.endOfChapter = () => shiftToParent(api);
+
+/** left message to not scary other addon developers :) */
+    apiStories.warning =
+`This API was changed by storybook-chapters addon!
+see https://github.com/sm-react/storybook-chapters`;
+}
+
+function treeEnable(api, fn, isEnable) {
+    initChapters(api);
+    const enableFn = (isEnb = true) => storiesEnable(api._currentСhapter, isEnb);
     enableFn(isEnable);
     if (fn) {
         try {
@@ -143,73 +160,21 @@ function treeEnable(api, fn, isEnable) {
 const addons = {
     chapter(chapterName, customToC) {
       // todo: depricate customToC, use .toc instead
-        /**
-         *  It calls only once to init chapters for storiesOf
-         *  and to create the root of chapters
-         *  it substitutes .add(), .chapter() and .endOfChapter()
-         *  for the next calls
-         */
-        if (!this._currentСhapter) {
-            /** we need to init "chapters" in first call
-             *  some other functions can do it before chapter()
-             */
-            initChapters(this);
-        }
-
-        this._add('[.]', this._chapter.TOC(this._chapter)); // ?????
-
+        initChapters(this);
         /** Create first "sub chapter" after **root**  */
         addNewChapter(this, chapterName);
-
-        /** substitute add() and chapter()
-         *  because we don't need to invoke them immidiately
-         *  we just store them in "subchapters"
-         */
-
-        this.chapter = name => addNewChapter(this, name); // todo: move to init
-
-        /** substitute endOfChapter() to work properly */
-        this.endOfChapter = () => {
-            this._currentСhapter = this._currentСhapter.parent || this._currentСhapter;
-            return this;
-        };
     },
 
     addChapter(chapterName, chapterFn) {
-      /** Usage:
-      .addChapter('Chapter1', chapter => chapter
-        .add('name', fn())
-        .addChapter('Chapter1-1', subFn) // subFn(chapter) {chapter.add();}
-       */
-        if (!this._currentСhapter) {
-            /** we need to init "chapters" in first call
-             *  some other functions can do it before chapter()
-             */
-            initChapters(this);
-        }
-        console.log('Create sss');
-        this._add('[.]', this._chapter.TOC(this._chapter)); // may cause error
-
-       /** Create first "sub chapter" after **root**  */
-       const currentСhapter = this._currentСhapter;
-       addNewChapter(this, chapterName);
-       this._currentСhapter = currentСhapter; // !!!
-
-        // const addChapter = (name, subChapterFn) => {
-        //     addNewChapter(this, name); // todo: move to init
-        //     subChapterFn(this);
-        // };
-
+        initChapters(this);
+        /** Create first "sub chapter" after **root**  */
+        addNewChapter(this, chapterName);
         chapterFn(this);
+        shiftToParent(this);
     },
 
     storyDecorator(fn) {
-        if (!this._currentСhapter) {
-            /** we need to init "chapters"
-             *  some other functions can do it as well
-             */
-            initChapters(this);
-        }
+        initChapters(this);
         this._storyDecorators = this._storyDecorators || [];
         this._storyDecorators.push(fn);
         this.addDecorator(fn);
@@ -219,6 +184,7 @@ const addons = {
          *  so now it's just dummy and don't do anything
          *  we'll substitute in chapter() to start work
          */
+        initChapters(this);
     },
     enable(fn) {
         treeEnable(this, fn, true);

@@ -70,15 +70,24 @@ const select = {
     },
 };
 
-// storiesOf('add-Chapter', module)
-//     .addChapter('add Left panel', chapter => chapter
-//         .add('Fn 1', fn(1))
-//         .add('Fn 2', fn(2))
-//         // .addChapter('Bottom Panel', chapter => chapter
-//         //     .add('Input 3', fn(3))
-//         //     .add('Input 4', fn(4))
-//         // )
-//     )
+storiesOf('New Chapters API', module)
+    .addChapter('Atoms', chapter => chapter
+        .add('Atom 1', fn(1))
+        .add('Atom 2', fn(2))
+        .addChapter('Molecules', chapter => chapter
+            .addChapter('Organisms', chapter => chapter
+                .add('Organism 1', fn(1))
+                .add('Organism 2', fn(2)),
+            )
+            .add('Molecule 1', fn(1))
+            .add('Molecule 2', fn(2)),
+        )
+        .add('Atom 3', fn(3))
+        .add('Atom 4', fn(4)),
+    )
+    .add('new API docs', fn(3))
+    .add('prev API docs', fn(4));
+
 //     .addChapter('add Header Panel', chapter => chapter
 //         .add('Fn 5', fn(5))
 //         .add('Fn 6', fn(6))
@@ -88,7 +97,7 @@ const select = {
 //     //     .add('Button 8', fn(8))
 //     // )
 
-storiesOf('React App', module)
+storiesOf('Old Chapters API', module)
     .storyDecorator(withKnobs)
     .chapter('Left panel')
         .chapter('Bottom Panel')
@@ -131,4 +140,4 @@ storiesOf('Heroes Dark', module)
     .add('Dark 3', fn(0))
     .add('Dark 4', fn(0));
 
-console.log(getStorybook());
+// console.log(getStorybook());

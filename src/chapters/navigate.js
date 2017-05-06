@@ -32,13 +32,15 @@ function rebuildStorybook(currentchapter) {
 export function chapterSelect(chapter, prevKindName) {
     return () => {
         const name = chapter.name;
-//        storiesOf(prevKindName, modDEL);
-        cleanStoriesOf(prevKindName);
-        rebuildStorybook(chapter);
-        linkTo(chapter.name, '.')();
-        setCurrentChapter(chapter);
+        const redirect = () => {
+            cleanStoriesOf(prevKindName);
+            rebuildStorybook(chapter);
+            linkTo(chapter.name, '.')();
+            setCurrentChapter(chapter);
+        };
+        redirect();
         return (
-          <button onClick={() => { rebuildStorybook(chapter); }}>
+          <button onClick={redirect}>
             <p>Redirect to {name} chapter</p>
           </button>
         );
