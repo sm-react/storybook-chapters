@@ -42,23 +42,6 @@ storiesOf('React App', module)
     .add('new API docs', render(3))
     .add('prev API docs', render(4));
 
-storiesOf('React App', module)
-    .chapter('Left panel')
-        .add('Button 1', render(1))
-        .add('Button 2', render(2))
-        .chapter('Bottom Panel')
-            .add('Input 3', render(3))
-            .add('Input 4', render(4))
-            .endOfChapter()
-        .chapter('Header Panel')
-            .add('Input 5', render(5))
-            .add('Input 6', render(6))
-            .endOfChapter()
-        .endOfChapter()
-    .chapter('Right panel')
-        .add('Button 7', render(7))
-        .add('Button 8', render(8))
-        .endOfChapter()
 ```
 
 ## Features
@@ -103,7 +86,7 @@ Here're the list of available API:
 
 - `.addChapter('ChapterName', chapter => chapter)` adds `ChapterName` subchapter to the root of `storiesOf` or to the current chapter and invokes function passed as second argument. This function provide same API as `storiesOf` (including third-party addons) with the difference that everything you add here will be applyed to this current chapter. E.g.  `chapter => chapter.add()` to add stories to this chapter and `chapter => chapter.addChapter()` to add subchapters.
 
-> example:
+**example:**
 ```js
 storiesOf('addChapter API', module)
     .addChapter('Atoms', chapter => chapter
@@ -120,7 +103,7 @@ Note how we use `.addWithInfo` to add stories to `.chapter('Molecules')`
 
 - `.chapter(ChapterName)` adds `ChapterName` subchapter to the root of `storiesOf` or to the current chapter. You can use any other API (going with `storybook-chapter` or any other third-party addon) after this and it will apply to this current chapter. E.g.  `.add()` to add stories to this chapter and `.chapter()` to add subchapters. Use `.endOfChapter()` to shift back to the parent or root chapter.
 
-> example:
+**example:**
 ```js
 storiesOf('.chapter API', module)
     .chapter('Bottom Panel')
@@ -141,9 +124,8 @@ Note how we use `.addWithInfo` to add stories to `.chapter('Header Panel')`
 
 - `.storyDecorator(decorator)` adds decorators to whole `storiesOf` (including subchapters). Enables "chapters". You can put it in any place of chapters tree, result will be the same.
 
-- `disable(enableFn => {})` - temporarily hides current `storiesOf`. `enableFn()` - function to hide/show these stories
+- `disable(enableFn => {})` - temporarily hides current `storiesOf`. `enableFn()` - function to hide/show these stories:
 
-> example:
 ```js
 enableFn(true)  // to show this stories
 enableFn(false) // to hide this stories
@@ -157,7 +139,7 @@ For example, you can use `enableFn()` in another stories, decorators or [addon p
 
 - mixing `.addChapter` and `.chapter`. It's possible to use any combination of this API.
 
-> example:
+**example:**
 ```js
 storiesOf('Mixed API', module)
     .addChapter('Atoms new', chapter => chapter
@@ -213,6 +195,9 @@ Use carefully since it in early stages. It's fairly experimental approach of add
 
 ## Credits
 
+Big thanks to [Norbert de Langen](https://github.com/ndelangen) for the idea of `.addChapter` API
+
 We'd be happy to receive feedback from this project. Any issue or PR will be appreciated!
 
 <div align="left" style="height: 16px;"><sub>Created with ❤︎ to <b>React</b> and <b>React Storybook</b> by <a href="https://twitter.com/UsulPro">@UsulPro</a> and     <a href="https://github.com/sm-react/react-theming">React Theming</a>.</sub></div>
+
