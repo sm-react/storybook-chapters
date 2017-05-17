@@ -77,7 +77,7 @@ export function setStore(store) {
         currentStory = name; // string
         console.log(currentStory);
         chapterSelect(newChapter, findRoot(newChapter).chapter.name)();
-        linkTo(newChapter.name, currentStory);
+        linkTo(newChapter.name, currentStory)();
         currentChapter = newChapter;
         stopWatch();
     });
