@@ -41,7 +41,10 @@ export function crumbsString(chapter, divChar = '/') {
     const str = crumbsArr.reduce((prev, val) => (
         `${prev.name || prev}${divChar}${val.name}`
     ));
-    return str;
+    if (typeof (str) === 'string') {
+        return str;
+    }
+    return chapter.name;
 }
 
 export function strToCrumbs(str, divChar = '/') {

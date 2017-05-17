@@ -1,5 +1,6 @@
+import { linkTo } from '@kadira/storybook';
 import { breadcrumbs, crumbsString, strToCrumbs } from './utils';
-import { chapterHide, chapterShow } from './navigate';
+import { chapterHide, chapterShow, chapterSelect } from './navigate';
 
 /** note: `channelStore`
   * store to communicate through the channel
@@ -10,10 +11,45 @@ let channelStore = null;
 let queryData = {};
 
 const chapterRootMap = {};
+let currentChapter = null;
+let currentStory = null;
 
 function findRoot(chapter) {
     const rootName = breadcrumbs(chapter)[0].name;
     return chapterRootMap[rootName] || null;
+}
+
+function findSubchapter(chapter, name) {
+    if (chapter.name === name) {
+        return chapter;
+    }
+    if (chapter.parent && chapter.parent.name === name) {
+        return chapter.parent;
+    }
+    let resultChapter = null;
+    chapter.subchapters.forEach((subChapter) => {
+        const result = findSubchapter(subChapter, name);
+        if (result) {
+            resultChapter = result;
+        }
+    });
+    return resultChapter;
+}
+
+function findChapterByKey(kindKey) {
+    const roots = Object.keys(chapterRootMap);
+    let resultChapter = null;
+    if (currentChapter) {
+        resultChapter = findSubchapter(currentChapter, kindKey);
+        if (resultChapter) return resultChapter;
+    }
+    roots.forEach((rootChapter) => {
+        const result = findSubchapter(chapterRootMap[rootChapter].chapter, kindKey);
+        if (result) {
+            resultChapter = result;
+        }
+    });
+    return resultChapter;
 }
 
 function lookForPath(chapNamesArr, currChap) {
@@ -36,18 +72,14 @@ function checkPath(chapNamesArr) {
 
 export function setStore(store) {
     channelStore = store;
-    const stopSubscription = channelStore.watch('queryData', (data) => {
-//        console.info('queryData in addon:', data);
-        queryData = data;
-        stopSubscription();
-
-        const chapNamesArr = strToCrumbs(queryData.chapter);
-        const reqChap = checkPath(chapNamesArr);
-//        console.log('reqChap:', reqChap);
-        if (reqChap) {
-        // temporary disable
-//            chapterSelect(reqChap, findRoot(reqChap).chapter.name)();
-        }
+    const stopWatch = channelStore.watch('onStory', ({ kind, name }) => {
+        const newChapter = findChapterByKey(kind);
+        currentStory = name; // string
+        console.log(currentStory);
+        chapterSelect(newChapter, findRoot(newChapter).chapter.name)();
+        linkTo(newChapter.name, currentStory);
+        currentChapter = newChapter;
+        stopWatch();
     });
 }
 
@@ -70,9 +102,6 @@ export function setCurrentChapter(chapter) {
     if (rootStored) {
         rootStored.current = chapter;
     }
-    queryData.chapter = crumbsString(chapter);
-    // temporary disable this:
-//    channelStore.set('queryData', queryData); // fixme: check errors in adk
 }
 
 export function getEnabledMap() {

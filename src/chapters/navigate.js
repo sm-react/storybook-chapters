@@ -12,7 +12,9 @@ export function newStorybook(chapter) {
     return () => {
         const newStory = storiesOf(chapter.name, module);
         decoratorList.forEach(fn => newStory.addDecorator(fn));
-        if (chapter.parent || chapterList.length > 0) newStory.add('[.]', chapter.TOC(chapter));
+        if (chapter.parent || chapterList.length > 0) {
+            newStory.add('[.]', chapter.TOC(chapter));
+        }
         if (chapter.parent) {
             newStory.add('[..]', chapterSelect(chapter.parent, chapter.name));
         }

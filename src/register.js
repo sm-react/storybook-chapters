@@ -14,4 +14,7 @@ register(config, (env) => {
 
     const setupChannel = env.channelInit(ENQ_SEND, 'cp01');
     /* const stopChannel = */ setupChannel();
+    env.storybookApi.onStory(( kind, name ) => {
+        env.addonStore.set('onStory', { kind, name });
+    });
 });
