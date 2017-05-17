@@ -1,6 +1,6 @@
 {
   "name": "storybook-chapters",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Adds Substories/Hierarchy to React Storybook",
   "main": "dist/index.js",
   "scripts": {

@@ -22,6 +22,13 @@ import 'storybook-chapters';
 ```
 
 ```js
+//addons.js:
+
+import 'storybook-chapters/register';
+
+```
+
+```js
 // stories.js:
 
 storiesOf('React App', module)
@@ -50,6 +57,7 @@ storiesOf('React App', module)
 - Hide/show your stories with `enable`/`disable` and buid your own navigation
 - Compatible with `Knobs`, `addWithInfo` and other addons
 - Use `storyDecorator` to wrap all chapters
+- Support query params of the address string to select (sub)chapter (same behavior as storybook holds current storyKind when you reload the page)
 
 ## Examples
 
@@ -176,18 +184,24 @@ storiesOf('React App', module).enable().add('item1', render());
 storiesOf('React App', module).add('item1', render()).chapter('Left panel');
 
 ```
+- Querry string. Storybook-Chapters use same querry params to set current storiKind/story. It means that you can reload page and don't lose current chapter. Or you can share the link of your chapter/story to point to exact place of your story. You need add one string in `addons.js` file for that.
+
+```js
+//addons.js:
+
+import 'storybook-chapters/register';
+
+``` 
 
 ## Roadmap
-
-- Use query params to store current (sub)chapter in address string
 
 - Custom TOC
 
 - Bookmarks
 
-- Custom addon panel
-
 - Chapter decorators
+
+- Page spreads
 
 ## Warning
 

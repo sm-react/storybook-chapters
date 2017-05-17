@@ -75,7 +75,6 @@ export function setStore(store) {
     const stopWatch = channelStore.watch('onStory', ({ kind, name }) => {
         const newChapter = findChapterByKey(kind);
         currentStory = name; // string
-        console.log(currentStory);
         chapterSelect(newChapter, findRoot(newChapter).chapter.name)();
         linkTo(newChapter.name, currentStory)();
         currentChapter = newChapter;
