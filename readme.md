@@ -184,7 +184,7 @@ storiesOf('React App', module).enable().add('item1', render());
 storiesOf('React App', module).add('item1', render()).chapter('Left panel');
 
 ```
-- Querry string. Storybook-Chapters use same querry params to set current storiKind/story. It means that you can reload page and don't lose current chapter. Or you can share the link of your chapter/story to point to exact place of your story. You need add one string in `addons.js` file for that.
+- Query string. Storybook-Chapters use the same query params to set current storiKind/story as Storybook. It means that you can reload page and don't lose current chapter. Or you can share the link of your chapter/story to point to exact place of your story. You need add one string in `addons.js` file for that.
 
 ```js
 //addons.js:
