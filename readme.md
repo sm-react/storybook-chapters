@@ -58,6 +58,7 @@ storiesOf('React App', module)
 - Compatible with `Knobs`, `addWithInfo` and other addons
 - Use `storyDecorator` to wrap all chapters
 - Support query params of the address string to select (sub)chapter (same behavior as storybook holds current storyKind when you reload the page)
+- Storybook 3.0 compatible
 
 ## Examples
 

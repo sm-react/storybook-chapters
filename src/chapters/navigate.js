@@ -1,5 +1,6 @@
 import React from 'react';
-import { configure, storiesOf, linkTo } from '@kadira/storybook';
+import { configure, storiesOf } from '@storybook/react';
+import { linkTo } from '@storybook/addon-links';
 import { setCurrentChapter } from './store';
 import { cleanStoriesOf } from './utils';
 // import { chapterTOC } from './defaults';

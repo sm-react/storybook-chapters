@@ -1,4 +1,4 @@
-import { setAddon } from '@kadira/storybook';
+import { setAddon } from '@storybook/react';
 import { initStore } from 'storybook-adk';
 import { ENQ_ASK } from 'storybook-adk/dist/store/store'; // fixme: in adk
 

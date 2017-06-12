@@ -2,8 +2,9 @@
 /* eslint-disable react/jsx-filename-extension */
 
 import React from 'react';
-import { storiesOf, action, getStorybook } from '@kadira/storybook';
-import { withKnobs, text } from '@kadira/storybook-addon-knobs';
+import { storiesOf, getStorybook } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import { withKnobs, text } from '@storybook/addon-knobs';
 
 import Button from './button';
 

@@ -1,4 +1,6 @@
-import '@kadira/storybook-addon-knobs/register';
-import '@kadira/storybook/addons';
-import '@kadira/storybook-addon-options/register';
+import '@storybook/addon-knobs/register';
+import '@storybook/addons';
+import '@storybook/addon-options/register';
+import { register as regActions } from '@storybook/addon-actions';
 import '../src/register';
+regActions();

@@ -1,4 +1,4 @@
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf } from '@storybook/react';
 
 const modDEL = {
     hot: {

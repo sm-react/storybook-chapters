@@ -1,5 +1,5 @@
 import React from 'react';
-import { linkTo } from '@kadira/storybook';
+import { linkTo } from '@storybook/addon-links';
 import { chapterSelect } from './navigate';
 import { breadcrumbs } from './utils';
 

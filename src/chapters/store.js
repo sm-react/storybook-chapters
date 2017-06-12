@@ -1,4 +1,4 @@
-import { linkTo } from '@kadira/storybook';
+import { linkTo } from '@storybook/addon-links';
 import { breadcrumbs, crumbsString, strToCrumbs } from './utils';
 import { chapterHide, chapterShow, chapterSelect } from './navigate';
 
