@@ -42,27 +42,45 @@ const select = {
     },
 };
 
-storiesOf('New Chapters API', module)
-    .addChapter('Atoms', chapter => chapter
-        .bookmark((bm) => { bookmarks.atoms = bm; })
-        .add('Atom 1', fn(1))
-        .add('Atom 2', fn(2))
-        .add('LinkTo', () => (
+storiesOf('.addChapter API', module)
+    .addChapter('Atoms with bookmarks', chapter => chapter
+        .add('Atom 1 with bookmarks.at1', fn(1))
+        .bookmark((bm) => { bookmarks.at1 = bm; })
+        .add('Atom 2 bookmarks.at2', fn(2))
+        .bookmark((bm) => { bookmarks.at2 = bm; })
+        .add('Bookmark To Atom1', () => (
             <div>
-                <p>Use bookmark:</p>
-                <button onClick={bookmarks.Atom1}>
+                <p>{'Use bookmark: onClick={bookmarks.at1}'}</p>
+                <button onClick={bookmarks.at1}>
                     Go
                 </button>
             </div>
         ))
-        .add('JumpTo', () => (
+        .add('Bookmark To Atom2', () => (
             <div>
-                <p>Use bookmark:</p>
+                <p>{'Use bookmark: onClick={bookmarks.at2}'}</p>
+                <button onClick={bookmarks.at2}>
+                    Go
+                </button>
+            </div>
+        ))
+        .add('Bookmark To Right Panel', () => (
+            <div>
+                <p>{'Use bookmark: onClick={bookmarks.rgt}'}</p>
+                <button onClick={bookmarks.rgt}>
+                    Go
+                </button>
+            </div>
+        ))
+        .add('Jump To Organism 1', () => (
+            <div>
+                <p>{"Use jumpTo: onClick={jumpTo('Organisms', 'Organism 1')}"}</p>
                 <button onClick={jumpTo('Organisms', 'Organism 1')}>
                     Go
                 </button>
             </div>
         ))
+        .bookmarkList()
         .addChapter('Molecules', chapter => chapter
             .addChapter('Organisms', chapter => chapter
                 .add('Organism 1', fn(7))
@@ -74,19 +92,19 @@ storiesOf('New Chapters API', module)
         .add('Atom 3', fn(3))
         .add('Atom 4', fn(4)),
     )
-    .add('new API docs', fn(3))
-    .add('prev API docs', fn(4));
+    .add('choose Dark side', () => {
+        select.set1(false);
+        select.set2();
+        return (<div>{'select.set1(false) -> Heroes Dark'}</div>);
+    })
+    .add('choose Light side', () => {
+        select.set1();
+        select.set2(false);
+        return (<div>{'select.set2(false) -> Heroes Light'}</div>);
+    });
 
-//     .addChapter('add Header Panel', chapter => chapter
-//         .add('Fn 5', fn(5))
-//         .add('Fn 6', fn(6))
-//     );
-//     // .addChapter('Right panel', chapter => chapter
-//     //     .add('Button 7', fn(7))
-//     //     .add('Button 8', fn(8))
-//     // )
 
-storiesOf('Old Chapters API', module)
+storiesOf('.chapter API', module)
     .storyDecorator(withKnobs)
     .chapter('Left panel')
         .chapter('Bottom Panel')
