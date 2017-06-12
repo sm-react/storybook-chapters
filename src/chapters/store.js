@@ -82,9 +82,15 @@ function checkPath(chapNamesArr) {
 
 export function switchTo(chapterObj, storyKey) {
     const currenChapter = findRoot(chapterObj).current;
-    console.log('switchTo:', storyKey);
     chapterSelect(chapterObj, currenChapter.name)();
     linkTo(chapterObj.name, storyKey)();
+}
+
+export function jumpTo(chapterKey, storyKey) {
+    const chapterObj = findChapterByKey(chapterKey);
+    return () => {
+        switchTo(chapterObj, storyKey);
+    };
 }
 
 export function setStore(store) {

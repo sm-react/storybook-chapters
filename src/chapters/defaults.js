@@ -135,7 +135,7 @@ export function bookmarkList(chapter) {
     return (
           <div style={styles.toc}>
             <Breadcrumbs path={breadcrumbs(chapter)} currentStory={chapter.name} />
-            <h3>{chapter.name}</h3>
+            <h3>{chapter.name} bookmarks:</h3>
             <hr />
 
             <div style={styles.storySection}>

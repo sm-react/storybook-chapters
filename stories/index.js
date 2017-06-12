@@ -5,6 +5,7 @@ import React from 'react';
 import { storiesOf, getStorybook } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs';
+import { jumpTo } from '../src';
 
 import Button from './button';
 
@@ -50,6 +51,14 @@ storiesOf('New Chapters API', module)
             <div>
                 <p>Use bookmark:</p>
                 <button onClick={bookmarks.Atom1}>
+                    Go
+                </button>
+            </div>
+        ))
+        .add('JumpTo', () => (
+            <div>
+                <p>Use bookmark:</p>
+                <button onClick={jumpTo('Organisms', 'Organism 1')}>
                     Go
                 </button>
             </div>
