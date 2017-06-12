@@ -58,6 +58,7 @@ storiesOf('React App', module)
 - Compatible with `Knobs`, `addWithInfo` and other addons
 - Use `storyDecorator` to wrap all chapters
 - Support query params of the address string to select (sub)chapter (same behavior as storybook holds current storyKind when you reload the page)
+- jumping between chapters
 - Storybook 3.0 compatible
 
 ## Examples
@@ -144,7 +145,9 @@ Note how we use `.addWithInfo` to add stories to `.chapter('Header Panel')`
 
 ##### chapters UI ❗️❗️❗️
 
-When you add chapter to your `storiesOf` or to another chaper it will be shown in the left panel in square brackets e.g. `[subchapter]`, so you can always distinguish subchapters from normal stories. If you click to this `[subchapter]` it'll redirect you to this chapter automatically and show the TOC of this chapter (the first story of any chapter). Below this TOC you'll find the item for jumping back to the parent level. [demo](https://sm-react.github.io/storybook-chapters/?selectedKind=Left%20panel&selectedStory=%E2%84%B9%EF%B8%8F&full=0&down=1&left=1&panelRight=0&downPanel=storybooks%2Fstorybook-addon-knobs)
+When you add chapter to your `storiesOf` or to another chaper it will be shown in the left panel in square brackets e.g. `[subchapter]`, so you can always distinguish subchapters from normal stories. If you click to this `[subchapter]` it'll redirect you to this chapter automatically and show the TOC of this chapter (the first story of any chapter). Below this TOC you'll find the item for jumping back to the parent level. 
+[demo](https://sm-react.github.io/storybook-chapters/?selectedKind=Left%20panel&selectedStory=%E2%84%B9%EF%B8%8F&full=0&down=1&left=1&panelRight=0&downPanel=storybooks%2Fstorybook-addon-knobs)
+
 Such UI is a workaround until Storybook provides better API for customizing left panel.
 
 ### .add
@@ -277,7 +280,7 @@ storiesOf('Mixed API', module)
 
 [demo](https://sm-react.github.io/storybook-chapters/?selectedKind=Mixed%20API&selectedStory=%E2%84%B9%EF%B8%8F&full=0&down=1&left=1&panelRight=0&downPanel=storybooks%2Fstorybook-addon-knobs)
 
-[example](https://github.com/sm-react/storybook-chapters/blob/master/stories/index.js#L136-L157)
+[example](https://github.com/sm-react/storybook-chapters/blob/master/stories/index.js#L154-L175)
 
 ### enabling chapters
 
