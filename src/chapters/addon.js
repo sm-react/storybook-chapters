@@ -26,6 +26,10 @@ import { chapterTOC } from './defaults';
  *  - `bookmarkList(customToC)`
  *
  *  - `toc(customToC)`
+ * 
+ *  - `spread` / `addSpread` - all stories on the one page
+ * 
+ *  - `wrap` decorate stories with addons like `addWithSmth`
  *
  */
 
@@ -179,6 +183,9 @@ const addons = {
         this._storyDecorators.push(fn);
         this.addDecorator(fn);
     },
+    wrap(fn) {
+        /** it's a next feature */
+    },
     endOfChapter() {
         /** we don't need to use endOfChapter() before chapter()
          *  so now it's just dummy and don't do anything
@@ -204,6 +211,13 @@ const addons = {
     toc(customToC) {
         /** it's a next feature */
         // const renderToC = customToC ? customToC(crumbs, chapters, stories) : chapterTOC;
+    },
+    spread(spreadName) {
+        /** it's a next feature */
+        // add page spread - all stories on the one page
+    },
+    addSpread(spreadName, spreadFn) {
+        /** it's a next feature */
     },
     _(storyName, getStory) {
         if (!this._currentСhapter) {

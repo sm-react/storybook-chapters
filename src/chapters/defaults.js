@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { linkTo } from '@storybook/addon-links';
 import { chapterSelect } from './navigate';
 import { breadcrumbs } from './utils';
@@ -53,8 +54,8 @@ export function Breadcrumbs({ path, currentStory }) {
     return <div>{steps}</div>;
 }
 Breadcrumbs.propTypes = {
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
-    currentStory: React.PropTypes.string,
+    path: PropTypes.arrayOf(PropTypes.object),
+    currentStory: PropTypes.string,
 };
 
 export function chapterTOC(chapter) {
