@@ -13,46 +13,16 @@ import Button from './button';
  *  addDecorator(muiTheme(greyTheme));
  *  You can pass a single object or an array of themes
  */
+const bookmarks = {};
 
-const fn = num => () => (
+const fn = (num, bm) => () => (
   <div>
     <h4>Custom Component {num}</h4>
-    <button onClick={action(`Story number #${num}`)}>
+    <button onClick={bm ? bookmarks[bm] : action(`Story number #${num}`)}>
         Press me {num} times
     </button>
   </div>
 );
-// `
-// const story = storiesOf('React App', module)
-    // .storyDecorator((story) => (<div><p>Decorator:</p>{story()}</div>))
-    // .add('dummmy 1', fn(0))
-    // .chapter('App')
-    // .endOfChapter()
-    // .add('App logo', fn(100))
-    // .add('App welcome', fn(101))
-    // .chapter('Left panel')
-    //     .add('Button 1', fn(1))
-    //     .add('Button 2', fn(2))
-    //     .chapter('Bottom Panel')
-    //         .add('Input 3', fn(3))
-    //         .add('Input 4', fn(4))
-    //         .endOfChapter()
-    //     .chapter('Header Panel')
-    //         .add('Input 5', fn(5))
-    //         .add('Input 6', fn(6))
-    //         .endOfChapter()
-    //     .endOfChapter()
-    // .chapter('Right panel')
-    //     .add('Button 7', fn(7))
-    //     .add('Button 8', fn(8))
-    //     .endOfChapter()
-    // .add('App footer', fn(110));
-
-// storiesOf('Just story 1', module)
-//     .add('Component 1', fn(0))
-//     .add('Component 2', fn(0))
-//     .add('Component 3', fn(0))
-//     .add('Component 4', fn(0));
 
 const select = {
     set1: () => {},
@@ -73,8 +43,17 @@ const select = {
 
 storiesOf('New Chapters API', module)
     .addChapter('Atoms', chapter => chapter
+        .bookmark((bm) => { bookmarks.atoms = bm; })
         .add('Atom 1', fn(1))
         .add('Atom 2', fn(2))
+        .add('LinkTo', () => (
+            <div>
+                <p>Use bookmark:</p>
+                <button onClick={bookmarks.Atom1}>
+                    Go
+                </button>
+            </div>
+        ))
         .addChapter('Molecules', chapter => chapter
             .addChapter('Organisms', chapter => chapter
                 .add('Organism 1', fn(7))
@@ -111,8 +90,12 @@ storiesOf('Old Chapters API', module)
             .endOfChapter()
         .endOfChapter()
     .chapter('Right panel')
+        .bookmark((bm) => { bookmarks.rgt = bm; })
         .add('Button 7', fn(7))
-        .add('Button 8', fn(8))
+        .bookmark((bm) => { bookmarks.But7 = bm; })
+        .add('Button 8', fn(8, 'But7'))
+        .add('Bookmark', fn(8, 'atoms'))
+        .bookmarkList()
         .endOfChapter()
     .add('Dark side', () => {
         select.set1(false);
@@ -144,7 +127,8 @@ storiesOf('Heroes Dark', module)
 storiesOf('Mixed API', module)
     .addChapter('Atoms new', chapter => chapter
         .add('Atom 1', fn(1))
-        .add('Atom 2', fn(2))
+        .bookmark((bm) => { bookmarks.Atom1 = bm; })
+        .add('Atom 2', fn(2, 'Atom1'))
         .addChapter('Molecules new', chapter => chapter
             .chapter('Cells old')
                 .add('Cell 1', fn(1))

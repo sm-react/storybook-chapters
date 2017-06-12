@@ -8,9 +8,19 @@ import { chapterHide, chapterShow, chapterSelect } from './navigate';
   * we need it to fetch and set querry data here
   */
 let channelStore = null;
-let queryData = {};
+// let queryData = {}; // todo: remove
 
 const chapterRootMap = {};
+/**
+ * chapterRootMap = { (consists all chapter branches)
+ *   chapterRoot : {
+ *     chapter : { the root chapter object (see createChapter() in addon.js) },
+ *     current : { the current chapter object },
+ *     enabled : { is this branch enabled (see treeEnable() in addon.js) },
+ *   }
+ * }
+ * 
+ */
 let currentChapter = null;
 let currentStory = null;
 
@@ -68,6 +78,13 @@ function checkPath(chapNamesArr) {
     const lookingChap = chapterRootMap[chapNamesArr[0]];
     if (!lookingChap) return false;
     return lookForPath(chapNamesArr.slice(1), lookingChap.chapter);
+}
+
+export function switchTo(chapterObj, storyKey) {
+    const currenChapter = findRoot(chapterObj).current;
+    console.log('switchTo:', storyKey);
+    chapterSelect(chapterObj, currenChapter.name)();
+    linkTo(chapterObj.name, storyKey)();
 }
 
 export function setStore(store) {

@@ -1,7 +1,7 @@
 import { chapterSelect } from './navigate';
-import { addRoot, storiesEnable } from './store';
+import { addRoot, storiesEnable, switchTo } from './store';
 import { setKindIndex } from './utils';
-import { chapterTOC } from './defaults';
+import { BADGES, chapterTOC, bookmarkList } from './defaults';
 
 /**
  *  This module provides "chapters" interface for developing stories.
@@ -45,6 +45,7 @@ function createChapter(api, name) {
         name,
         subchapters: [],
         stories: [],
+        bookmarks: [],
         decorators: api._storyDecorators,
         TOC: api.storyTOC || chapterTOC,
         rootStore: null, /** we add this in initChapters after addRoot() */
@@ -132,7 +133,7 @@ function initChapters(api) { // todo: new API initAddon - to inject this to stor
     apiStories._currentСhapter = api._chapter;
 
 /** add TOC story to the current "root chapter" */
-    api._add('[.]', api._chapter.TOC(api._chapter));
+    api._add(BADGES.toc, api._chapter.TOC(api._chapter));
 
 /** save this root object in the addon store */
     apiStories._chapter.rootStore = addRoot(api._chapter);
@@ -200,13 +201,23 @@ const addons = {
         treeEnable(this, fn, false);
     },
     bookmark(fn) {
-        /** it's a next feature */
-        const dummyfn = () => {};
-        fn(dummyfn);
+        const currentChapter = this._currentСhapter;
+        const currentStory = this._currentСhapter.stories.slice(-1)[0];
+        /**
+         * if we add a bookmark right after the chapter
+         * it will point to this chapter TOC
+         * //future: use smth else instead of '[.]'
+         */
+        const storyName = currentStory ? currentStory.storyName : BADGES.toc;
+        const gotofn = () => {
+            switchTo(currentChapter, storyName);
+        };
+        this._currentСhapter.bookmarks.push({ storyName, gotofn });
+        fn(gotofn);
     },
     bookmarkList(customToC) {
         /** it's a next feature */
-
+        addToChapter(this, BADGES.bookmarks, bookmarkList(this._currentСhapter));
     },
     toc(customToC) {
         /** it's a next feature */

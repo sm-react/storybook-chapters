@@ -4,6 +4,13 @@ import { linkTo } from '@storybook/addon-links';
 import { chapterSelect } from './navigate';
 import { breadcrumbs } from './utils';
 
+export const BADGES = {
+  up: '⤴️',
+  toc: 'ℹ️',
+  bookmarks: '🔖',
+  tags: ':hash:',
+}
+
 const styles = {
     toc: {
         fontFamily: 'sans-serif',
@@ -107,4 +114,37 @@ export function chapterTOC(chapter) {
           </div>
         );
     };
+}
+
+
+export function bookmarkList(chapter) {
+  return () => {
+    const bookmarks = chapter.bookmarks.map((val) => {
+            return (
+              <li style={styles.storyItems} key={val.storyName}>
+                <a
+                  href={`#${val.storyName}`}
+                  style={styles.chapLink}
+                  onClick={() => console.log(val.storyName)}
+                >
+                  {val.storyName}
+                </a>
+              </li>
+            );
+        });
+    return (
+          <div style={styles.toc}>
+            <Breadcrumbs path={breadcrumbs(chapter)} currentStory={chapter.name} />
+            <h3>{chapter.name}</h3>
+            <hr />
+
+            <div style={styles.storySection}>
+              <ul>
+                {bookmarks}
+              </ul>
+            </div>
+
+          </div>
+        );
+  }
 }

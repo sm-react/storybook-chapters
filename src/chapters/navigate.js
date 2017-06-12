@@ -3,6 +3,7 @@ import { configure, storiesOf } from '@storybook/react';
 import { linkTo } from '@storybook/addon-links';
 import { setCurrentChapter } from './store';
 import { cleanStoriesOf } from './utils';
+import { BADGES } from './defaults';
 // import { chapterTOC } from './defaults';
 
 
@@ -14,10 +15,10 @@ export function newStorybook(chapter) {
         const newStory = storiesOf(chapter.name, module);
         decoratorList.forEach(fn => newStory.addDecorator(fn));
         if (chapter.parent || chapterList.length > 0) {
-            newStory.add('[.]', chapter.TOC(chapter));
+            newStory.add(BADGES.toc, chapter.TOC(chapter));
         }
         if (chapter.parent) {
-            newStory.add('[..]', chapterSelect(chapter.parent, chapter.name));
+            newStory.add(BADGES.up, chapterSelect(chapter.parent, chapter.name));
         }
         chapterList.forEach((subchapter) => {
             newStory.add(`[${subchapter.name}]`, chapterSelect(subchapter, chapter.name));
@@ -38,7 +39,7 @@ export function chapterSelect(chapter, prevKindName) {
         const redirect = () => {
             cleanStoriesOf(prevKindName);
             rebuildStorybook(chapter);
-            linkTo(chapter.name, '.')();
+            linkTo(chapter.name, '.')(); // fixme: ???
             setCurrentChapter(chapter);
         };
         redirect();
