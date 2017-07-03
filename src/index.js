@@ -18,3 +18,5 @@ export default function addChapters(options) {
 addChapters();
 
 export { getEnabledMap, setEnabledMap };
+
+console.warn('Warning: storybook-chapters package name is deprecated. Use @storybook/addon-chapters instead. It supports Storybook v3. See https://github.com/sm-react/storybook-chapters');
