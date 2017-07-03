@@ -6,3 +6,4 @@ doc
 .eslintrc
 .scripts
 .storybook
+register_es6.js

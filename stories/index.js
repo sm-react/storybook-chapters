@@ -42,7 +42,7 @@ const select = {
     },
 };
 
-storiesOf('.addChapter API', module)
+storiesOf('.addChapter API 🔖', module)
     .addChapter('Atoms with bookmarks', chapter => chapter
         .add('Atom 1 with bookmarks.at1', fn(1))
         .bookmark((bm) => { bookmarks.at1 = bm; })

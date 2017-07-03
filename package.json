@@ -1,11 +1,11 @@
 {
   "name": "@storybook/addon-chapters",
-  "version": "0.6.0",
+  "version": "0.6.2",
   "description": "Adds Substories/Hierarchy to React Storybook",
   "main": "dist/index.js",
   "scripts": {
     "deploy": "node .scripts/deployer",
-    "prepublish": "node .scripts/npm-prepublish.js",
+    "prepublish": "node .scripts/npm-prepublish.js && babel ./register_es6.js -o register.js",
     "postpublish": "node .scripts/npm-postpublish.js",
     "lint": "node .scripts/lint.js",
     "lintfix": "node .scripts/lint.js --fix",

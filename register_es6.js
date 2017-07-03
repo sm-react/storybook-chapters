@@ -2,7 +2,7 @@ import { register } from 'storybook-adk';
 import { register as regAddonLinks } from '@storybook/addon-links';
 import { ENQ_SEND } from 'storybook-adk/dist/store/store'; // fixme: in adk
 
-import config from './config';
+import config from './dist/config';
 
 const logger = {
     log() {},
