@@ -1,3 +1,5 @@
+## This addon no longer maintained and considered as deprecated in favor of Storybook native [nesting](https://storybook.js.org/basics/writing-stories/#nesting-stories). Nevertheless, if you're interested to continue to maintain this project get in touch with [me](https://now-examples-slackin-rrirkqohko.now.sh/), please.
+
 # 📖 @storybook/addon-chapters 
 [![npm version](https://badge.fury.io/js/%40storybook%2Faddon-chapters.svg)](https://badge.fury.io/js/%40storybook%2Faddon-chapters)
 [![Live demo](https://img.shields.io/badge/Live%20Demo-%20Storybook-brightgreen.svg)](https://sm-react.github.io/storybook-chapters)
