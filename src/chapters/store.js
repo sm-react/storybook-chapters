@@ -4,7 +4,7 @@ import { chapterHide, chapterShow, chapterSelect } from './navigate';
 
 /** note: `channelStore`
   * store to communicate through the channel
-  * via [storybook-adk](https://github.com/sm-react/storybook-adk)
+  * via [@storybook/addon-devkit](https://github.com/storybookjs/addon-development-kit)
   * we need it to fetch and set querry data here
   */
 let channelStore = null;
@@ -19,7 +19,7 @@ const chapterRootMap = {};
  *     enabled : { is this branch enabled (see treeEnable() in addon.js) },
  *   }
  * }
- * 
+ *
  */
 let currentChapter = null;
 let currentStory = null;

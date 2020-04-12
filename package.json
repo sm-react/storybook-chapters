@@ -77,14 +77,14 @@
     "style-loader": "^0.13.1"
   },
   "peerDependencies": {
-    "@storybook/react": "^3.0.0",
     "@storybook/addons": "^3.1.2",
+    "@storybook/react": "^3.0.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1"
   },
   "dependencies": {
+    "@storybook/addon-devkit": "0.7.9",
     "@storybook/addon-links": "^3.1.2",
-    "prop-types": "^15.5.10",
-    "storybook-adk": "^0.7.8"
+    "prop-types": "^15.5.10"
   }
 }

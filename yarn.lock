@@ -12,6 +12,17 @@
     prop-types "^15.5.8"
     react-inspector "^2.0.0"
 
+"@storybook/addon-devkit@0.7.9":
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-devkit/-/addon-devkit-0.7.9.tgz#44c79664468fb5ca89f1cbc54cc6e5234afa84fd"
+  integrity sha512-P9cOLi3xFc6+5UgUSZifb/E0WUgSrQNFNDR5mAUAfUAJq52PttlDXd2ZVk3iQZh17i7kQoMT5rmV2KJoz/CwCg==
+  dependencies:
+    "@storybook/addons" "^3.1.2"
+    immutable "^3.8.1"
+    podda "^1.2.2"
+    prop-types "^15.5.10"
+    react-komposer "2"
+
 "@storybook/addon-info@^3.1.3":
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/@storybook/addon-info/-/addon-info-3.1.3.tgz#0fb26ffcaf2068a3c058d16074a899f5b15d1eb4"
@@ -6206,16 +6217,6 @@ sshpk@^1.7.0:
 "statuses@>= 1.3.1 < 2", statuses@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
-
-storybook-adk@^0.7.8:
-  version "0.7.8"
-  resolved "https://registry.yarnpkg.com/storybook-adk/-/storybook-adk-0.7.8.tgz#114312e6bcfbbfe0f9d8e74dfcce0a5a63cf4e49"
-  dependencies:
-    "@storybook/addons" "^3.1.2"
-    immutable "^3.8.1"
-    podda "^1.2.2"
-    prop-types "^15.5.10"
-    react-komposer "2"
 
 stream-browserify@^2.0.1:
   version "2.0.1"

@@ -1,6 +1,6 @@
 import { setAddon } from '@storybook/react';
-import { initStore } from 'storybook-adk';
-import { ENQ_ASK } from 'storybook-adk/dist/store/store'; // fixme: in adk
+import { initStore } from '@storybook/addon-devkit';
+import { ENQ_ASK } from '@storybook/addon-devkit/dist/store/store'; // fixme: in adk
 
 import config from './config';
 import chapters from './chapters';
