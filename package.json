@@ -28,7 +28,8 @@
     "decorator",
     "customization",
     "development",
-    "addons"
+    "addons",
+    "storybook-addon"
   ],
   "license": "MIT",
   "bugs": {
